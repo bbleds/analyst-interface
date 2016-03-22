@@ -9,17 +9,27 @@ $.get("data/ch08.txt.xml", function (data) {
   var textInjection = function textInjection(number) {
     var chapterContent = contentContainer.textContent;
     var category = spans[number].getAttribute("category");
-    // write first letter of each in class
     var startChar = parseInt(spans[number].childNodes[1].childNodes[1].getAttribute("START"));
     var endChar = parseInt(spans[number].childNodes[1].childNodes[1].getAttribute("END")) + 1;
+    // build annotation
     var annotationText = spans[number].childNodes[1].childNodes[1].textContent;
     var spanToAdd = document.createElement("span");
     var spanText = document.createTextNode(annotationText);
-    spanToAdd.setAttribute("class", "highlighted");
+    if (category === "PERSON") {
+      spanToAdd.setAttribute("class", "per");
+    }
+    if (category === "ORGANIZATION") {
+      spanToAdd.setAttribute("class", "org");
+    }
+    if (category === "LOCATION") {
+      spanToAdd.setAttribute("class", "loc");
+    }
     spanToAdd.appendChild(spanText);
-    var preAnnotation = contentContainer.innerHTML.slice(0, startChar + 33 * number);
+    // split chapter content html into an array with two items
+    var preAnnotation = contentContainer.innerHTML.slice(0, startChar + 25 * number);
     var postAnnotation = chapterContent.slice(endChar, chapterContent.length);
     var splitText = contentContainer.innerHTML.split(preAnnotation);
+    // Join text back together
     contentContainer.innerHTML = preAnnotation;
     contentContainer.appendChild(spanToAdd);
     contentContainer.innerHTML += postAnnotation;
