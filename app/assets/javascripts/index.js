@@ -17,18 +17,19 @@ $.get("../../data/ch08.txt.xml", function (data) {
     var spanText = document.createTextNode(annotationText);
     spanToAdd.setAttribute("class", "highlighted");
     spanToAdd.appendChild(spanText);
-    var splitText = contentContainer.innerHTML.split(chapterContent.substring(startChar, endChar));
-    console.log(chapterContent.substring(startChar, endChar));
-    console.log(splitText);
-    contentContainer.innerHTML = splitText[0];
+    // var one = slice chapter content to one less than first char
+    // var two = slice chapter content from one more than last char to chaptercontent.length
+    // splie by var one then insert span, then append two
+    var preAnnotation = contentContainer.innerHTML.slice(0, startChar + 33 * number);
+    var postAnnotation = chapterContent.slice(endChar, chapterContent.length);
+    // console.log(`postAnnotation is:\n\n${postAnnotation}`);
+    var splitText = contentContainer.innerHTML.split(preAnnotation);
+    contentContainer.innerHTML = preAnnotation;
     contentContainer.appendChild(spanToAdd);
-    for (var i = 1; i < splitText.length; i++) {
-      contentContainer.innerHTML += splitText[i];
-    }
+    contentContainer.innerHTML += postAnnotation;
   };
 
-  // for(let i = 0; i < 4; i++){
-  //     textInjection(i)
-  // }
-  textInjection(1);
+  for (var i = 0; i < spans.length; i++) {
+    textInjection(i);
+  }
 });
