@@ -22,12 +22,17 @@
     "gulp-clean": "^0.3.2",
     "gulp-sass": "^2.2.0",
     "gulp-watch": "^4.3.5",
-    "mocha": "^2.4.5"
+    "istanbul": "^0.4.2",
+    "mocha": "^2.4.5",
+    "mocha-jsdom": "^1.1.0"
   },
   "author": "Benjamin Bledsoe <bledsoedesigns@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/bbleds/analyst-interface/issues"
   },
-  "homepage": "https://github.com/bbleds/analyst-interface#readme"
+  "homepage": "https://github.com/bbleds/analyst-interface#readme",
+  "dependencies": {
+    "jquery": "^2.2.2"
+  }
 }
