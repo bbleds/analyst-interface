@@ -1,3 +1,6 @@
+#Source Files
+All source files are located in the build directory
+
 # Local Use
 To run this app locally/ get it on your machine, run the following:
   1. Clone onto your machine: ```git clone git@github.com:bbleds/analyst-interface.git```
