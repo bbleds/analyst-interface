@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "build": "gulp"
+    "build": "gulp",
+    "bower": "bower"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
   },
   "homepage": "https://github.com/bbleds/analyst-interface#readme",
   "dependencies": {
-    "jquery": "^2.2.2"
+    "express": "^4.13.4",
+    "path": "^0.12.7"
   }
 }
