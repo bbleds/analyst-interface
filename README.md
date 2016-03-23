@@ -1,5 +1,5 @@
 # Local Use
-To run this app locally/ get it on your machine run the following:
+To run this app locally/ get it on your machine, run the following:
   1. Clone onto your machine: ```git clone git@github.com:bbleds/analyst-interface.git```
   2. Move into the new directory ```cd analyst-interface```
   3. Install dependencies ```npm install```
