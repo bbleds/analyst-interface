@@ -1,20 +1,20 @@
 "use strict";
-$.get("data/ch08.txt.xml", (data)=>{
-  const xml = data;
-  const contentContainer = document.getElementById("chapter-content")
+$.get("data/ch08.txt.xml", (data) => {
+  const xml = data,
+  contentContainer = document.getElementById("chapter-content");
+  // remove <pre> tag whitespace formatting
   contentContainer.innerHTML =  contentContainer.textContent.split("      ").join("");
   const spans = data.getElementsByTagName("span");
 
-
-    const textInjection = (number)=> {
-      const chapterContent = contentContainer.textContent;
-      const category = spans[number].getAttribute("category");
-      const startChar = parseInt(spans[number].childNodes[1].childNodes[1].getAttribute("START"));
-      const endChar = parseInt(spans[number].childNodes[1].childNodes[1].getAttribute("END"))+1;
+    const textInjection = (number) => {
+      const chapterContent = contentContainer.textContent,
+            category = spans[number].getAttribute("category"),
+            startChar = parseInt(spans[number].childNodes[1].childNodes[1].getAttribute("START")),
+            endChar = parseInt(spans[number].childNodes[1].childNodes[1].getAttribute("END"))+1;
       // build annotation
-      const annotationText = spans[number].childNodes[1].childNodes[1].textContent;
-      const spanToAdd = document.createElement("span");
-      const spanText = document.createTextNode(annotationText);
+      const annotationText = spans[number].childNodes[1].childNodes[1].textContent,
+            spanToAdd = document.createElement("span"),
+            spanText = document.createTextNode(annotationText);
       if(category==="PERSON"){
         spanToAdd.setAttribute("class","per");
       }
@@ -26,19 +26,16 @@ $.get("data/ch08.txt.xml", (data)=>{
       }
       spanToAdd.appendChild(spanText);
       // split chapter content html into an array with two items
-      const preAnnotation = contentContainer.innerHTML.slice(0,startChar+(25*number));
-      const postAnnotation = chapterContent.slice(endChar,chapterContent.length);
-      const splitText = contentContainer.innerHTML.split(preAnnotation);
+      const preAnnotation = contentContainer.innerHTML.slice(0,startChar+(25*number)),
+            postAnnotation = chapterContent.slice(endChar,chapterContent.length),
+            splitText = contentContainer.innerHTML.split(preAnnotation);
       // Join text back together
       contentContainer.innerHTML = preAnnotation;
       contentContainer.appendChild(spanToAdd);
       contentContainer.innerHTML+= postAnnotation;
-
     }
 
     for(let i = 0; i < spans.length; i++){
         textInjection(i)
     }
-
-
 });
