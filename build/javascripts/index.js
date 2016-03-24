@@ -76,4 +76,10 @@ $.get("data/ch08.txt.xml", (data) => {
       });
     });
     // Delete annotation on "#deleteAnnotation" click
+    $("#deleteAnnotation").click(()=> {
+    const nodeToAdd = document.createTextNode(spanSelected.textContent);
+    contentContainer.insertBefore(nodeToAdd, spanSelected);
+    contentContainer.removeChild(spanSelected);
+      $("#tooltip").css("display","none");
+    })
 });
