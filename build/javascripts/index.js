@@ -10,6 +10,7 @@ $.get("data/ch08.txt.xml", (data) => {
   // ------- Functions
   const changeAnnotation = (annotationClass, element)=> {
     element.setAttribute("class", annotationClass);
+    console.log(annotationClass);
   };
 
   // ------- Main Functionality
@@ -60,8 +61,8 @@ $.get("data/ch08.txt.xml", (data) => {
     });
     $("#changeHandler").click(function(){
       const annCategory = $(this).parent().children()[0].innerHTML;
-      // get select dropdown value, check which type it is, pass into the changeAnnotation function as a class,
-      //  thus user dynamically changes annotation Type
-      changeAnnotation("org",spanSelected)
+      console.log(annCategory);
+      const newCategory = $(this).parent().children()[2].value.slice(0,3).toLowerCase();
+      changeAnnotation(newCategory,spanSelected)
     });
 });

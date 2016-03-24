@@ -11,6 +11,7 @@ $.get("data/ch08.txt.xml", function (data) {
   // ------- Functions
   var changeAnnotation = function changeAnnotation(annotationClass, element) {
     element.setAttribute("class", annotationClass);
+    console.log(annotationClass);
   };
 
   // ------- Main Functionality
@@ -61,6 +62,8 @@ $.get("data/ch08.txt.xml", function (data) {
   });
   $("#changeHandler").click(function () {
     var annCategory = $(this).parent().children()[0].innerHTML;
-    changeAnnotation("org", spanSelected);
+    console.log(annCategory);
+    var newCategory = $(this).parent().children()[2].value.slice(0, 3).toLowerCase();
+    changeAnnotation(newCategory, spanSelected);
   });
 });
