@@ -1,6 +1,13 @@
 #chapter-content{
   line-height: 2.1rem;
 }
+#tooltip{
+  position: absolute;
+  width: 250px;
+  height: 150px;
+  background-color: red;
+  text-align: center;
+}
 .per,.org,.loc{
   border-bottom: 3px solid blue;
   cursor: pointer;

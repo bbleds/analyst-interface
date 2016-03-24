@@ -6,6 +6,14 @@ $.get("data/ch08.txt.xml", function (data) {
   // remove <pre> tag whitespace formatting
   contentContainer.innerHTML = contentContainer.textContent.split("      ").join("");
   var spans = data.getElementsByTagName("span");
+  var spanSelected = "";
+
+  // ------- Functions
+  var changeAnnotation = function changeAnnotation(annotationClass, element) {
+    element.setAttribute("class", annotationClass);
+  };
+
+  // ------- Main Functionality
 
   var textInjection = function textInjection(number) {
     var chapterContent = contentContainer.textContent,
@@ -39,4 +47,20 @@ $.get("data/ch08.txt.xml", function (data) {
   for (var i = 0; i < spans.length; i++) {
     textInjection(i);
   }
+  // Edit Annotation Category
+  $("span").click(function (event) {
+    var annotationCategory = this.getAttribute("class");
+    var annotationText = this.textContent;
+    $("#tooltip").css({
+      "top": event.offsetY - 155 + "px",
+      "left": event.offsetX - 10 + "px"
+    });
+    $("#selectedCategory").html(annotationCategory);
+    $("#selectedText").html(annotationText);
+    spanSelected = this;
+  });
+  $("#changeHandler").click(function () {
+    var annCategory = $(this).parent().children()[0].innerHTML;
+    changeAnnotation("org", spanSelected);
+  });
 });

@@ -5,6 +5,14 @@ $.get("data/ch08.txt.xml", (data) => {
   // remove <pre> tag whitespace formatting
   contentContainer.innerHTML =  contentContainer.textContent.split("      ").join("");
   const spans = data.getElementsByTagName("span");
+  let spanSelected = "";
+
+  // ------- Functions
+  const changeAnnotation = (annotationClass, element)=> {
+    element.setAttribute("class", annotationClass);
+  };
+
+  // ------- Main Functionality
 
     const textInjection = (number) => {
       const chapterContent = contentContainer.textContent,
@@ -36,6 +44,24 @@ $.get("data/ch08.txt.xml", (data) => {
     }
 
     for(let i = 0; i < spans.length; i++){
-        textInjection(i)
+        textInjection(i);
     }
+    // Edit Annotation Category
+    $("span").click(function(event){
+      const annotationCategory = this.getAttribute("class");
+      const annotationText = this.textContent;
+      $("#tooltip").css({
+        "top": `${event.offsetY-155}px`,
+        "left": `${event.offsetX-10}px`
+      });
+      $("#selectedCategory").html(annotationCategory);
+      $("#selectedText").html(annotationText);
+      spanSelected = this;
+    });
+    $("#changeHandler").click(function(){
+      const annCategory = $(this).parent().children()[0].innerHTML;
+      // get select dropdown value, check which type it is, pass into the changeAnnotation function as a class,
+      //  thus user dynamically changes annotation Type
+      changeAnnotation("org",spanSelected)
+    });
 });
