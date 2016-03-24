@@ -49,21 +49,31 @@ $.get("data/ch08.txt.xml", function (data) {
     textInjection(i);
   }
   // Edit Annotation Category
+  // Use ES5 function syntax for "this"
   $("span").click(function (event) {
     var annotationCategory = this.getAttribute("class");
     var annotationText = this.textContent;
     $("#tooltip").css({
       "top": event.offsetY - 155 + "px",
-      "left": event.offsetX - 10 + "px"
+      "left": event.offsetX - 10 + "px",
+      "display": "block"
     });
     $("#selectedCategory").html(annotationCategory);
     $("#selectedText").html(annotationText);
     spanSelected = this;
   });
+  // change annotation category on a clicked annotation
+  // Use ES5 function syntax for "this"
   $("#changeHandler").click(function () {
-    var annCategory = $(this).parent().children()[0].innerHTML;
-    console.log(annCategory);
-    var newCategory = $(this).parent().children()[2].value.slice(0, 3).toLowerCase();
+    var annCategory = $(this).parent().children()[1].innerHTML;
+    var newCategory = $(this).parent().children()[3].value.slice(0, 3).toLowerCase();
     changeAnnotation(newCategory, spanSelected);
+  });
+  // Set tooltip css to display none on "#dismissTooltip" click
+  // Use ES5 function syntax for "this"
+  $("#dismissTooltip").click(function () {
+    $(this).parent().css({
+      "display": "none"
+    });
   });
 });
