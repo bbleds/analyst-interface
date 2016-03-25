@@ -82,4 +82,40 @@ $.get("data/ch08.txt.xml", (data) => {
     contentContainer.removeChild(spanSelected);
       $("#tooltip").css("display","none");
     })
+    // Dynamically Add annotationClass
+    $("#addAnnotationButton").click((event)=>{
+      event.preventDefault();
+      const selection = window.getSelection();
+      if(selection.anchorNode !== null && selection.anchorNode.childNodes.length < 10){
+        const categorySelected = $("#addAnnotationPanel").children()[0].value;
+        const start = selection.anchorOffset;
+        const stop = selection.focusOffset;
+        const fullText = selection.anchorNode.textContent;
+        const textOffset = contentContainer.innerHTML.indexOf(`${fullText}`);
+        const highlightedText = fullText.slice(start, stop);
+        const preText = contentContainer.innerHTML.slice(0,textOffset+start);
+        const postText = contentContainer.innerHTML.slice(textOffset+stop, contentContainer.innerHTML.length);
+        const span = document.createElement("span");
+        const spanTextNode = document.createTextNode(highlightedText);
+        span.setAttribute("class",categorySelected.slice(0,3).toLowerCase());
+        span.appendChild(spanTextNode);
+        contentContainer.innerHTML = preText;
+        contentContainer.appendChild(span);
+        contentContainer.innerHTML += postText;
+        $("span").click(function(event){
+          const annotationCategory = this.getAttribute("class");
+          const annotationText = this.textContent;
+          $("#tooltip").css({
+            "top": `${event.offsetY-155}px`,
+            "left": `${event.offsetX-10}px`,
+            "display": "block"
+          });
+          $("#selectedCategory").html(annotationCategory);
+          $("#selectedText").html(annotationText);
+          spanSelected = this;
+        });
+      } else {
+        console.log("Nothing is selected");
+      }
+    })
 });

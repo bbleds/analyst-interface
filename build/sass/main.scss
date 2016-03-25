@@ -1,6 +1,13 @@
 #chapter-content{
   line-height: 2.1rem;
 }
+#addAnnotationPanel{
+  position: fixed;
+  width: 200px;
+  height: 200px;
+  right: 20px;
+  top: 20px;
+}
 #tooltip{
   position: absolute;
   display: none;
