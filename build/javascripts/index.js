@@ -7,13 +7,28 @@ $.get("data/ch08.txt.xml", (data) => {
   const spans = data.getElementsByTagName("span");
   let spanSelected = "";
 
-  // ------- Functions
+  // ----------------------- Functions
   const changeAnnotation = (annotationClass, element)=> {
     element.setAttribute("class", annotationClass);
-    console.log(annotationClass);
   };
+  // Bind tooltip to span click for editing Annotation Category
+  // Use ES5 function syntax for "this"
+  const bindTooltipOnCLick = () => {
+    $("span").click(function(event){
+      const annotationCategory = this.getAttribute("class");
+      const annotationText = this.textContent;
+      $("#tooltip").css({
+        "top": `${event.offsetY-155}px`,
+        "left": `${event.offsetX-10}px`,
+        "display": "block"
+      });
+      $("#selectedCategory").html(annotationCategory);
+      $("#selectedText").html(annotationText);
+      spanSelected = this;
+    });
+  }
 
-  // ------- Main Functionality
+  // ----------------------- Main Functionality
 
     const textInjection = (number) => {
       const chapterContent = contentContainer.textContent,
@@ -47,25 +62,14 @@ $.get("data/ch08.txt.xml", (data) => {
     for(let i = 0; i < spans.length; i++){
         textInjection(i);
     }
-    // Edit Annotation Category
-    // Use ES5 function syntax for "this"
-    $("span").click(function(event){
-      const annotationCategory = this.getAttribute("class");
-      const annotationText = this.textContent;
-      $("#tooltip").css({
-        "top": `${event.offsetY-155}px`,
-        "left": `${event.offsetX-10}px`,
-        "display": "block"
-      });
-      $("#selectedCategory").html(annotationCategory);
-      $("#selectedText").html(annotationText);
-      spanSelected = this;
-    });
+
+    bindTooltipOnCLick();
+
     // change annotation category on a clicked annotation
     // Use ES5 function syntax for "this"
     $("#changeHandler").click(function(){
-      const annCategory = $(this).parent().children()[1].innerHTML;
-      const newCategory = $(this).parent().children()[3].value.slice(0,3).toLowerCase();
+      const annCategory = $(this).parent().children()[1].innerHTML,
+            newCategory = $(this).parent().children()[3].value.slice(0,3).toLowerCase();
       changeAnnotation(newCategory,spanSelected)
     });
     // Set tooltip css to display none on "#dismissTooltip" click
@@ -97,30 +101,19 @@ $.get("data/ch08.txt.xml", (data) => {
            start = selection.focusOffset;
            stop = selection.anchorOffset;
         }
-        const fullText = selection.anchorNode.textContent;
-        const textOffset = contentContainer.innerHTML.indexOf(`${fullText}`);
-        const highlightedText = fullText.slice(start, stop);
-        const preText = contentContainer.innerHTML.slice(0,textOffset+start);
-        const postText = contentContainer.innerHTML.slice(textOffset+stop, contentContainer.innerHTML.length);
-        const span = document.createElement("span");
-        const spanTextNode = document.createTextNode(highlightedText);
+        const fullText = selection.anchorNode.textContent,
+              textOffset = contentContainer.innerHTML.indexOf(`${fullText}`),
+              highlightedText = fullText.slice(start, stop),
+              preText = contentContainer.innerHTML.slice(0,textOffset+start),
+              postText = contentContainer.innerHTML.slice(textOffset+stop, contentContainer.innerHTML.length),
+              span = document.createElement("span"),
+              spanTextNode = document.createTextNode(highlightedText);
         span.setAttribute("class",categorySelected.slice(0,3).toLowerCase());
         span.appendChild(spanTextNode);
         contentContainer.innerHTML = preText;
         contentContainer.appendChild(span);
         contentContainer.innerHTML += postText;
-        $("span").click(function(event){
-          const annotationCategory = this.getAttribute("class");
-          const annotationText = this.textContent;
-          $("#tooltip").css({
-            "top": `${event.offsetY-155}px`,
-            "left": `${event.offsetX-10}px`,
-            "display": "block"
-          });
-          $("#selectedCategory").html(annotationCategory);
-          $("#selectedText").html(annotationText);
-          spanSelected = this;
-        });
+        bindTooltipOnCLick();
       } else {
         console.log("Either nothing is selected, or the selection includes an annotation");
       }
