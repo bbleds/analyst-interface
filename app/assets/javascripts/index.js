@@ -81,6 +81,9 @@ $.get("data/ch08.txt.xml", function (data) {
     var annCategory = $(this).parent().children()[1].innerHTML,
         newCategory = $(this).parent().children()[3].value.slice(0, 3).toLowerCase();
     changeAnnotation(newCategory, spanSelected);
+    $(this).parent().css({
+      "display": "none"
+    });
   });
   // Set tooltip css to display none on "#dismissTooltip" click
   // Use ES5 function syntax for "this"
