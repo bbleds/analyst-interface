@@ -87,10 +87,17 @@ $.get("data/ch08.txt.xml", function (data) {
   $("#addAnnotationButton").click(function (event) {
     event.preventDefault();
     var selection = window.getSelection();
-    if (selection.anchorNode !== null && selection.anchorNode.childNodes.length < 10) {
+    var start = 0;
+    var stop = 0;
+    if (selection.anchorNode !== null && selection.anchorNode.childNodes.length < 10 && $("#chapter-content").html().indexOf("" + window.getSelection().toString()) !== -1) {
       var categorySelected = $("#addAnnotationPanel").children()[0].value;
-      var start = selection.anchorOffset;
-      var stop = selection.focusOffset;
+      if (selection.anchorOffset < selection.focusOffset) {
+        start = selection.anchorOffset;
+        stop = selection.focusOffset;
+      } else {
+        start = selection.focusOffset;
+        stop = selection.anchorOffset;
+      }
       var fullText = selection.anchorNode.textContent;
       var textOffset = contentContainer.innerHTML.indexOf("" + fullText);
       var highlightedText = fullText.slice(start, stop);
@@ -116,7 +123,7 @@ $.get("data/ch08.txt.xml", function (data) {
         spanSelected = this;
       });
     } else {
-      console.log("Nothing is selected");
+      console.log("Either nothing is selected, or the selection includes an annotation");
     }
   });
 });

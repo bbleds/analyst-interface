@@ -86,10 +86,17 @@ $.get("data/ch08.txt.xml", (data) => {
     $("#addAnnotationButton").click((event)=>{
       event.preventDefault();
       const selection = window.getSelection();
-      if(selection.anchorNode !== null && selection.anchorNode.childNodes.length < 10){
+      let start= 0;
+      let stop = 0;
+      if(selection.anchorNode !== null && selection.anchorNode.childNodes.length < 10 && $("#chapter-content").html().indexOf(`${window.getSelection().toString()}`) !== -1){
         const categorySelected = $("#addAnnotationPanel").children()[0].value;
-        const start = selection.anchorOffset;
-        const stop = selection.focusOffset;
+        if(selection.anchorOffset<selection.focusOffset){
+           start = selection.anchorOffset;
+           stop = selection.focusOffset;
+        } else {
+           start = selection.focusOffset;
+           stop = selection.anchorOffset;
+        }
         const fullText = selection.anchorNode.textContent;
         const textOffset = contentContainer.innerHTML.indexOf(`${fullText}`);
         const highlightedText = fullText.slice(start, stop);
@@ -115,7 +122,7 @@ $.get("data/ch08.txt.xml", (data) => {
           spanSelected = this;
         });
       } else {
-        console.log("Nothing is selected");
+        console.log("Either nothing is selected, or the selection includes an annotation");
       }
     })
 });
