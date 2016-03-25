@@ -4,17 +4,25 @@
 #addAnnotationPanel{
   position: fixed;
   width: 200px;
-  height: 200px;
+  padding: 25px;
   right: 20px;
   top: 20px;
+  background-color: whitesmoke;
+  border-radius: 5px;
 }
 #tooltip{
   position: absolute;
   display: none;
   width: 250px;
   height: 150px;
-  background-color: red;
+  background-color: rgb(189, 189, 189);
+  border-radius: 5px;
   text-align: center;
+  z-index: 1;
+    #dismissTooltip{
+      position: relative;
+      right: -100px;
+    }
 }
 .per,.org,.loc{
   color: blue;
@@ -28,6 +36,7 @@
     top: -22px;
     left: 0px;
     color: red;
+    z-index: 0;
   }
 }
 .org{
@@ -37,6 +46,7 @@
     top: -22px;
     left: 0px;
     color: green;
+    z-index: 0;
   }
 }
 .loc{
@@ -46,5 +56,6 @@
     top: -22px;
     left: 0px;
     color: #1BC7E2;
+    z-index: 0;
   }
 }

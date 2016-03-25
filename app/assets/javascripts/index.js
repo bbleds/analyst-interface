@@ -19,10 +19,19 @@ $.get("data/ch08.txt.xml", function (data) {
       var annotationCategory = this.getAttribute("class");
       var annotationText = this.textContent;
       $("#tooltip").css({
-        "top": event.offsetY - 155 + "px",
+        "top": event.offsetY + 23 + "px",
         "left": event.offsetX - 10 + "px",
         "display": "block"
       });
+      if (annotationCategory === "per") {
+        annotationCategory = "person";
+      }
+      if (annotationCategory === "org") {
+        annotationCategory = "organization";
+      }
+      if (annotationCategory === "loc") {
+        annotationCategory = "location";
+      }
       $("#selectedCategory").html(annotationCategory);
       $("#selectedText").html(annotationText);
       spanSelected = this;
@@ -69,8 +78,8 @@ $.get("data/ch08.txt.xml", function (data) {
   // change annotation category on a clicked annotation
   // Use ES5 function syntax for "this"
   $("#changeHandler").click(function () {
-    var annCategory = $(this).parent().children()[1].innerHTML;
-    var newCategory = $(this).parent().children()[3].value.slice(0, 3).toLowerCase();
+    var annCategory = $(this).parent().children()[1].innerHTML,
+        newCategory = $(this).parent().children()[3].value.slice(0, 3).toLowerCase();
     changeAnnotation(newCategory, spanSelected);
   });
   // Set tooltip css to display none on "#dismissTooltip" click
@@ -102,13 +111,13 @@ $.get("data/ch08.txt.xml", function (data) {
         start = selection.focusOffset;
         stop = selection.anchorOffset;
       }
-      var fullText = selection.anchorNode.textContent;
-      var textOffset = contentContainer.innerHTML.indexOf("" + fullText);
-      var highlightedText = fullText.slice(start, stop);
-      var preText = contentContainer.innerHTML.slice(0, textOffset + start);
-      var postText = contentContainer.innerHTML.slice(textOffset + stop, contentContainer.innerHTML.length);
-      var span = document.createElement("span");
-      var spanTextNode = document.createTextNode(highlightedText);
+      var fullText = selection.anchorNode.textContent,
+          textOffset = contentContainer.innerHTML.indexOf("" + fullText),
+          highlightedText = fullText.slice(start, stop),
+          preText = contentContainer.innerHTML.slice(0, textOffset + start),
+          postText = contentContainer.innerHTML.slice(textOffset + stop, contentContainer.innerHTML.length),
+          span = document.createElement("span"),
+          spanTextNode = document.createTextNode(highlightedText);
       span.setAttribute("class", categorySelected.slice(0, 3).toLowerCase());
       span.appendChild(spanTextNode);
       contentContainer.innerHTML = preText;

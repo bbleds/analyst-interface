@@ -15,13 +15,22 @@ $.get("data/ch08.txt.xml", (data) => {
   // Use ES5 function syntax for "this"
   const bindTooltipOnCLick = () => {
     $("span").click(function(event){
-      const annotationCategory = this.getAttribute("class");
+      let annotationCategory = this.getAttribute("class");
       const annotationText = this.textContent;
       $("#tooltip").css({
-        "top": `${event.offsetY-155}px`,
+        "top": `${event.offsetY+23}px`,
         "left": `${event.offsetX-10}px`,
         "display": "block"
       });
+      if(annotationCategory==="per"){
+        annotationCategory = "person";
+      }
+      if(annotationCategory==="org"){
+        annotationCategory = "organization";
+      }
+      if(annotationCategory==="loc"){
+        annotationCategory = "location";
+      }
       $("#selectedCategory").html(annotationCategory);
       $("#selectedText").html(annotationText);
       spanSelected = this;
