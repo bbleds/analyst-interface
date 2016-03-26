@@ -12,7 +12,7 @@ To run this app locally/ get it on your machine, run the following:
 To add annotations, highlight a portion of text and select the category of annotation you want to add from the panel in the top right of the viewport. Then, click the "Add Annotation" button.
 
 # Deleting Annotations
-To delete an annotation, click on the annotation and then click on the "delete" button on popup.
+To delete an annotation, click on the annotation and then click on the "delete" button on the popup.
 
 #Editing Annotations
 To edit an annotation, click on the annotation and select the category to apply to the annotation. Then, click the "change" button on the popup.
