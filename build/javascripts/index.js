@@ -98,7 +98,7 @@ $.get("data/ch08.txt.xml", (data) => {
     contentContainer.removeChild(spanSelected);
       $("#tooltip").css("display","none");
     })
-    // Dynamically Add annotationClass
+    // Dynamically add annotationClass
     $("#addAnnotationButton").click((event)=>{
       event.preventDefault();
       const selection = window.getSelection();
@@ -130,4 +130,29 @@ $.get("data/ch08.txt.xml", (data) => {
         console.log("Either nothing is selected, or the selection includes an annotation");
       }
     })
+    // Save annotations
+    $("#saveAnnotations").click(()=> {
+      const annotationData = {
+        annotations:[]
+      };
+      $("#chapter-content span").map((index, span)=>{
+        const annotationToAdd = {};
+        const spanClass = span.getAttribute("class");
+        let category = "";
+        if(spanClass==="per"){
+          category = "PERSON"
+        }
+        if(spanClass==="org"){
+          category = "ORGANIZATION"
+        }
+        if(spanClass==="loc"){
+          category = "LOCATION"
+        }
+        annotationToAdd.category = category;
+        annotationToAdd.content = span.textContent;
+        annotationData.annotations.push(annotationToAdd)
+      });
+      console.log("JSON Data Below: ");
+      console.log(JSON.stringify(annotationData));
+    });
 });

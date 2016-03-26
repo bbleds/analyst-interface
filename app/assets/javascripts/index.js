@@ -99,7 +99,7 @@ $.get("data/ch08.txt.xml", function (data) {
     contentContainer.removeChild(spanSelected);
     $("#tooltip").css("display", "none");
   });
-  // Dynamically Add annotationClass
+  // Dynamically add annotationClass
   $("#addAnnotationButton").click(function (event) {
     event.preventDefault();
     var selection = window.getSelection();
@@ -130,5 +130,30 @@ $.get("data/ch08.txt.xml", function (data) {
     } else {
       console.log("Either nothing is selected, or the selection includes an annotation");
     }
+  });
+  // Save annotations
+  $("#saveAnnotations").click(function () {
+    var annotationData = {
+      annotations: []
+    };
+    $("#chapter-content span").map(function (index, span) {
+      var annotationToAdd = {};
+      var spanClass = span.getAttribute("class");
+      var category = "";
+      if (spanClass === "per") {
+        category = "PERSON";
+      }
+      if (spanClass === "org") {
+        category = "ORGANIZATION";
+      }
+      if (spanClass === "loc") {
+        category = "LOCATION";
+      }
+      annotationToAdd.category = category;
+      annotationToAdd.content = span.textContent;
+      annotationData.annotations.push(annotationToAdd);
+    });
+    console.log("JSON Data Below: ");
+    console.log(JSON.stringify(annotationData));
   });
 });

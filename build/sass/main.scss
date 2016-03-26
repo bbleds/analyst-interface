@@ -9,6 +9,20 @@
   top: 20px;
   background-color: whitesmoke;
   border-radius: 5px;
+
+  #saveAnnotations{
+    display: block;
+    width: 100px;
+    height: 35px;
+    margin-top: 20px;
+    background-color: white;
+    cursor: pointer;
+    border-radius: 3px;
+    border: 1px solid rgb(156, 156, 156);
+    position: relative;
+    left: 50%;
+    margin-left: -50px;
+  }
 }
 #tooltip{
   position: absolute;
