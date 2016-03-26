@@ -136,8 +136,8 @@ $.get("data/ch08.txt.xml", (data) => {
         annotations:[]
       };
       $("#chapter-content span").map((index, span)=>{
-        const annotationToAdd = {};
-        const spanClass = span.getAttribute("class");
+        const annotationToAdd = {},
+              spanClass = span.getAttribute("class");
         let category = "";
         if(spanClass==="per"){
           category = "PERSON"

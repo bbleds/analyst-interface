@@ -137,8 +137,8 @@ $.get("data/ch08.txt.xml", function (data) {
       annotations: []
     };
     $("#chapter-content span").map(function (index, span) {
-      var annotationToAdd = {};
-      var spanClass = span.getAttribute("class");
+      var annotationToAdd = {},
+          spanClass = span.getAttribute("class");
       var category = "";
       if (spanClass === "per") {
         category = "PERSON";
